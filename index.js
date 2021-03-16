@@ -38,7 +38,7 @@ app.get('/getPeriod', (req, res) => {
     res.send(moment.preciseDiff(m1, m2, true))
     }
     catch(err){
-        throw err;
+        res.send(err);
     }
 })
 
