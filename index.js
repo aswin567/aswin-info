@@ -10,25 +10,8 @@ var bodyParserURLEncoded = bodyParser.urlencoded({extended:true});
 app.use(bodyParserJSON);
 app.use(bodyParserURLEncoded);
 app.use(function (req, res, next) {
-
-    // Website you wish to allow to connect  
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    // Request methods you wish to allow
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    res.setHeader(
-        'Access-Control-Allow-Headers',
-        'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-      );
-    // res.setHeader('Access-Control-Allow-Origin', 'http://aswinkv.com');
-    // res.setHeader('Access-Control-Allow-Origin', 'https://aswinkv.com');
-    // res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
-
-
-    // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-
-    // Pass to next layer of middleware
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
 
