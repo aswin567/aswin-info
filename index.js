@@ -20,8 +20,7 @@ app.get('/getPeriod', (req, res) => {
     try{
     var m1 = moment('2015-09-07 09:30:00', 'YYYY-MM-DD HH:mm:ss');
     var m2 = moment(new Date(), 'YYYY-MM-DD HH:mm:ss');
-    //res.send(moment.preciseDiff(m1, m2, true))
-    res.send({as:'sassa'});
+    res.send(moment.preciseDiff(m1, m2, true))
     }
     catch(err){
         res.send(err);
