@@ -31,23 +31,26 @@ app.get('/getPeriod', (req, res) => {
 
 app.post('/sendMail', (req, res, next) => {
     try {
-        var transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: 'aswinkv.dev@gmail.com',//replace with your email
-                pass: 'developer!@#123'//replace with your password
+        
+        let transporter = nodemailer.createTransport({
+            host: "smtp-mail.outlook.com", // hostname
+            secureConnection: false, // TLS requires secureConnection to be false
+            port: 587, // port for secure SMTP
+            tls: {
+               ciphers:'SSLv3'
             },
-            tls:{
-                rejectUnauthorized: false
+            auth: {
+                user: 'aswink.dev@outlook.com',
+                pass: 'developer!@#123'
             }
         });
         var mailOptions = {
-            from: 'aswinkv.dev@gmail.com',//replace with your email
+            from: 'aswink.dev@outlook.com',//replace with your email
             to: ['mykrishna16@gmail.com', 'admin@aswinkv.com'],//replace with your email
             subject: req.body.subject,
-            html: `<h2> name:${req.body.name} </h2>
-                <h3> email:${req.body.email} </h3>
-                <h3> phonenumber:${req.body.mobile} </h3><br><hr>
+            html: `<h2> ${req.body.name} </h2>
+                <h3> ${req.body.email} </h3>
+                <h3> ${req.body.mobile} </h3><br><hr>
                 <p>${req.body.content} </p>`
         };
         transporter.sendMail(mailOptions, function (error, info) {
