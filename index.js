@@ -36,6 +36,9 @@ app.post('/sendMail', (req, res, next) => {
             auth: {
                 user: 'aswinkv.dev@gmail.com',//replace with your email
                 pass: 'developer!@#123'//replace with your password
+            },
+            tls:{
+                rejectUnauthorized: false
             }
         });
         var mailOptions = {
