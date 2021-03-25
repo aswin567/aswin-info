@@ -28,44 +28,41 @@ app.get('/getPeriod', (req, res) => {
     }
 })
 
-app.post('/sendMail', async (req, res) => {
-    try{
-        const emailDetails = {
-            fromEmail: req.body.email,
-            name: req.body.name,
-            subject: req.body.subject,
-            text: req.body.content,
-    
-        }
-        // create reusable transporter object using the default SMTP transport 
-        let testAccount = await nodemailer.createTestAccount();
-        let transporter = nodemailer.createTransport({
-            host: 'smtp.ethereal.email',
-            port: 587,
-            auth: {
-                user: testAccount.user, // generated ethereal user
-                pass: testAccount.pass, // generated ethereal password
-            }
-        });
-        // send mail with defined transport object
-        let info = await transporter.sendMail({
-            from: `"${emailDetails.name}" <${emailDetails.fromEmail}>`, // sender address
-            to: "admin@aswinkv.com", // list of receivers
-            subject: "Hello ✔", // Subject line
-            text: "Hello world?"
-        });
-        if(info){
-            res.json('Message send sucessfully');
-        }
-    }
-    catch(err){
-        throw err;
-    }
 
+app.post('/sendMail', (req, res, next) => {
+    console.log(req.body)
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'aswinkv.dev@gmail.com',//replace with your email
+            pass: 'developer!@#123'//replace with your password
+        }
+    });
+    var mailOptions = {
+        from: 'aswinkv.dev@gmail.com',//replace with your email
+        to: ['mykrishna16@gmail.com', 'admin@aswinkv.com'],//replace with your email
+        subject: req.body.subject,
+        html: `<h2> name:${req.body.name} </h2>
+                <h3> email:${req.body.email} </h3>
+                <h3> phonenumber:${req.body.mobile} </h3><br><hr>
+                <p>${req.body.content} </p>`
+    };
+    /*
+     Here comes the important part, sendMail is the method which actually sends email, it takes mail options and
+    call back as parameter
+    */
+    transporter.
+    sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error);
+            res.send('error') // if error occurs send error as response to client
+        }
+        else {
+            console.log('Email sent: ' + info.response);
+            res.send('Sent Successfully')//if mail is sent successfully send Sent successfully as response
+        }
+    });
 })
-
-app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`)
-})
+app.listen(port, () => {})
 
 
